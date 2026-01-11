@@ -113,6 +113,10 @@ This separation ensures the engine can later be reused for:
 
 ---
 
+## Sample Run
+
+![CLI Output](docs/cli-output.png)
+
 ## How to Run
 
 From the project root:
@@ -127,13 +131,14 @@ Or build a binary:
 go build -o tournament ./cmd/tournament
 ./tournament
 ```
+
 ## What I Learned
 
-- Go concurrency is powerful only when used deliberately  
-- Randomness must be isolated in concurrent systems  
-- Simulation bias (e.g. first-mover advantage) is real and subtle  
-- Clean architecture makes debugging and evolution easier  
-- Engine-first thinking scales better than UI-first thinking  
+- Go concurrency is powerful only when used deliberately
+- Randomness must be isolated in concurrent systems
+- Simulation bias (e.g. first-mover advantage) is real and subtle
+- Clean architecture makes debugging and evolution easier
+- Engine-first thinking scales better than UI-first thinking
 
 ---
 
