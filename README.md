@@ -127,3 +127,27 @@ Or build a binary:
 go build -o tournament ./cmd/tournament
 ./tournament
 ```
+## What I Learned
+
+- Go concurrency is powerful only when used deliberately  
+- Randomness must be isolated in concurrent systems  
+- Simulation bias (e.g. first-mover advantage) is real and subtle  
+- Clean architecture makes debugging and evolution easier  
+- Engine-first thinking scales better than UI-first thinking  
+
+---
+
+## Future Extensions (Optional)
+
+- Deterministic seed mode (`--seed`)
+- Large-scale Monte Carlo simulations
+- Worker pool–based execution
+- Structured JSON output for analytics
+
+---
+
+## Final Note
+
+This project intentionally stops at a **stable, balanced, and correct engine**.
+
+The goal was depth of understanding, not feature bloat.
