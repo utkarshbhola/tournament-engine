@@ -12,20 +12,31 @@ type FightResult struct {
 func runRound(fighters []model.Fighter) []model.Fighter {
 	results := make(chan FightResult, len(fighters)/2)
 
-	for i:=0;i<len(fighters); i += 2{
-		a:= fighters[i]
-		b:= fighters[i+1]
+	var winners []model.Fighter
+
+	limit := len(fighters)
+
+	// If odd, last fighter gets a bye
+	if limit%2 == 1 {
+		winners = append(winners, fighters[limit-1])
+		limit-- // exclude last fighter from fights
+	}
+
+	for i := 0; i < limit; i += 2 {
+		a := fighters[i]
+		b := fighters[i+1]
 
 		go func() {
 			rng := util.NewRng()
-			winner := simulateFight(a,b,rng)
-			results <- FightResult{Winner:winner}
+			winner := simulateFight(a, b, rng)
+			results <- FightResult{Winner: winner}
 		}()
 	}
-	var winners []model.Fighter
-	for i:= 0;i < len(fighters)/2;i++{
+
+	for i := 0; i < limit/2; i++ {
 		res := <-results
-		winners = append(winners,res.Winner)
+		winners = append(winners, res.Winner)
 	}
+
 	return winners
 }
