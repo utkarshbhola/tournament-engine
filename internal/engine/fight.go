@@ -19,24 +19,33 @@ func simulateFight(a, b model.Fighter, rng *rand.Rand) model.Fighter {
 	a.Health = a.MaxHealth
 	b.Health = b.MaxHealth
 
-	attacker, defender := &a, &b
+	var attacker, defender *model.Fighter
+
+	// Randomize first attacker to avoid bias
+	if rng.Intn(2) == 0 {
+		attacker, defender = &a, &b
+	} else {
+		attacker, defender = &b, &a
+	}
 
 	for attacker.Health > 0 && defender.Health > 0 {
 		damage := attacker.Attack
 
-		if hasAdvantage(attacker.Archetype,defender.Archetype){
+		if hasAdvantage(attacker.Archetype, defender.Archetype) {
 			damage += 3
 		}
-		
+
 		if rng.Float64() < attacker.Special.TriggerProb {
 			damage += attacker.Special.DamageBoost
 		}
 
 		defender.Health -= damage
-		attacker,defender = defender, attacker
+
+		// swap turns
+		attacker, defender = defender, attacker
 	}
 
-	if a.Health > 0{
+	if a.Health > 0 {
 		return a
 	}
 	return b

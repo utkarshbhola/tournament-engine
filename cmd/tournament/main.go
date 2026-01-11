@@ -23,9 +23,52 @@ func loadFighters() []model.Fighter {
 	}
 }
 
+func printFighters(fighters []model.Fighter) {
+	fmt.Println("AVAILABLE FIGHTERS:")
+	fmt.Println("ID  NAME     HT  HP  ATK  TYPE")
+
+	for i, f := range fighters {
+		fmt.Printf(
+			"%d   %-8s %3d %3d %3d  %s\n",
+			i, f.Name, f.HeightCM, f.MaxHealth, f.Attack, f.Archetype,
+		)
+	}
+	fmt.Println()
+}
+
+func chooseFighter(fighters []model.Fighter) int {
+	var choice int
+
+	fmt.Print("Choose your fighter (enter ID): ")
+	fmt.Scan(&choice)
+
+	if choice < 0 || choice >= len(fighters) {
+		fmt.Println("Invalid choice. Defaulting to fighter 0.")
+		return 0
+	}
+
+	return choice
+}
+
 func main() {
+	printIntroStory()
+
 	fighters := loadFighters()
+	printFighters(fighters)
+
+	playerIndex := chooseFighter(fighters)
+	playerName := fighters[playerIndex].Name
+
+	fmt.Println("\nYou chose:", playerName)
+	fmt.Println("-----------------------------------")
+
 	champion := engine.RunTournament(fighters)
 
-	fmt.Println("AND THE CHAMPION IS !!", champion.Name)
+	fmt.Println()
+	if champion.Name == playerName {
+		fmt.Println("YOU WON THE TOURNAMENT!")
+	} else {
+		fmt.Println("AND THE CHAMPION IS !!", champion.Name)
+		fmt.Println("You were eliminated earlier.")
+	}
 }
